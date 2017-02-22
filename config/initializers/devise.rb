@@ -8,7 +8,7 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
 
   # config.secret_key = '9b259d7cec3caa32123ba0ab0d4726f511d10aa0e2b381e9c430f89d222084b5391fc6abf4cac9346132e05eb62cddb0c0e48b2ec00ce27480830339628055c7'
-
+  config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"]
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -111,7 +111,7 @@ Devise.setup do |config|
   # Set up a pepper to generate the hashed password.
 
   # config.pepper = '9d4f6fff310c7a4b8619187c23ea016c3058de73cc0dce4f45467bed57facffca357a23b1f0ac43859b94efb127941fa57e729d74ae880eedc41fb28c4c97b58'
- 
+
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false
 
