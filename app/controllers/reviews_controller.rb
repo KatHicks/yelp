@@ -13,6 +13,14 @@ class ReviewsController < ApplicationController
     redirect_to restaurants_path
   end
 
+  def destroy
+    @review = Review.find(params[:id])
+    @restaurant = @review.restaurant_id
+    @review.destroy
+    flash[:notice] = 'Review deleted successfully'
+    redirect_to restaurant_path(@restaurant)
+  end
+
   private
 
   def review_params

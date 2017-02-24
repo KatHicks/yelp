@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'restaurants' do
+    include CapybaraHelper
     context 'no restaurants have been added' do
         scenario 'should display a prompt to add a restuarant' do
             visit '/restaurants'
@@ -10,12 +11,7 @@ feature 'restaurants' do
     end
 
     before do
-        visit '/'
-        click_link('Sign up')
-        fill_in('Email', with: 'test@example.com')
-        fill_in('Password', with: 'testtest')
-        fill_in('Password confirmation', with: 'testtest')
-        click_button('Sign up')
+        sign_up
 
         @user = User.find_by_email("test@example.com")
     end
@@ -33,12 +29,7 @@ feature 'restaurants' do
 
     context 'creating restaurants' do
         scenario 'prompts user to fill out a form, then displays the new restaurant' do
-            visit '/restaurants'
-            click_link 'Add a restaurant'
-            fill_in 'Name', with: 'Nandos'
-            click_button 'Create Restaurant'
-            expect(page).to have_content 'Nandos'
-            expect(current_path).to eq '/restaurants'
+            add_restaurant
         end
         context 'an invalid restaurant' do
             scenario 'does not let you submit a name that is too short' do

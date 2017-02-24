@@ -1,27 +1,36 @@
 require 'rails_helper'
 
 feature 'reviewing' do
-  before do
-      visit '/'
-      click_link('Sign up')
-      fill_in('Email', with: 'test@example.com')
-      fill_in('Password', with: 'testtest')
-      fill_in('Password confirmation', with: 'testtest')
-      click_button('Sign up')
+  include CapybaraHelper
 
-      @user = User.find_by_email("test@example.com")
-      Restaurant.create(name: 'KFC', user_id: @user.id)
+  before do
+    sign_up
+    add_restaurant
   end
 
   scenario 'allows users to leave a review using a form' do
-     visit '/restaurants'
-     click_link 'Review KFC'
-     fill_in "Thoughts", with: "so so"
-     select '3', from: 'Rating'
-     click_button 'Leave Review'
-
-     expect(current_path).to eq '/restaurants'
-     expect(page).to have_content('so so')
+    create_review
+    expect(current_path).to eq '/restaurants'
+    expect(page).to have_content('It was great!')
   end
 
+  scenario 'allows user to delete a review' do
+    create_review
+    visit '/restaurants'
+    click_link 'Nandos'
+    expect(page).to have_content 'It was great!'
+    expect(page).to have_content 'Delete review'
+  end
+
+  scenario 'deleting removes the review from the page' do
+    create_review
+    visit '/restaurants'
+    click_link 'Nandos'
+    expect(page).to have_content 'It was great!'
+    expect(page).to have_content 'Delete review'
+    click_link 'Delete review'
+    visit '/restaurants'
+    click_link 'Nandos'
+    expect(page).not_to have_content 'It was great!'
+  end
 end
