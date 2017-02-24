@@ -7,9 +7,9 @@ class ReviewsController < ApplicationController
 
   def create
     @restaurant = Restaurant.find(params[:restaurant_id])
-    @review = @restaurant.reviews.new(review_params)
-    @review.user_id = current_user.id
-    @review.save
+    @review = @restaurant.reviews.new(review_params) # adding thoughts and ratings from the form to the review
+    @review.user_id = current_user.id # adding current_user to the review
+    @review.save # closing the addition
     redirect_to restaurants_path
   end
 

@@ -1,6 +1,6 @@
 - if @restaurant.errors.any?
   %section#errors
-    %h2
+    %p
       = pluralize @restaurant.errors.count, "error"
       prohibited this restaurant from being saved:
     %ul
